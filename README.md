@@ -2,6 +2,7 @@
 
 ## Overview
 This Streamlit-based chatbot application utilizes AI to provide personalized information from AI-related documents using vector embeddings and a question-answering system. It leverages PyMuPDF for PDF text extraction, Pinecone for vector storage and retrieval, and OpenAI's GPT-4 model for natural language processing.
+The application is specifically tailored to analyze documents like "AI Trends.pdf," which contains detailed information about upcoming trends in artificial intelligence.
 
 ## Features
 - **PDF Text Extraction:** Extracts text from PDF documents using PyMuPDF.
