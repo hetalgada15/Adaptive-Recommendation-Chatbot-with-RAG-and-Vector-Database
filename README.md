@@ -22,7 +22,7 @@ cd Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database
 - Ensure the following environment variables are set:
   - `OPENAI_API_KEY`: API key for OpenAI's GPT-4 model.
   - `PINECONE_API_KEY`: API key for Pinecone vector storage.
-  - Optionally, set `PINECONE_ENV` to specify the Pinecone environment (default: `us-east-1`).
+  - Optionally, set `PINECONE_ENV` to specify the Pinecone region (default: `us-east-1`).
 
 2. **Run the Application:**
 streamlit run AI.py
