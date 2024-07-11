@@ -44,5 +44,5 @@ streamlit run AI.py
 - Pinecone
 - OpenAI GPT-4
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+## Author
+[Hetal Gada]
