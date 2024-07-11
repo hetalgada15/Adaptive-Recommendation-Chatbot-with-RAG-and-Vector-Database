@@ -11,8 +11,8 @@ This Streamlit-based chatbot application utilizes AI to provide personalized inf
 
 ## Installation
 1. Clone the repository:
-git clone <[repository_url](https://github.com/hetalgada15/Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database.git)>
-cd <Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database>
+git clone [[repository_url](https://github.com/hetalgada15/Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database.git)](https://github.com/hetalgada15/Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database.git)
+cd Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database
 
 
 2. Install dependencies from `requirements.txt`:
