@@ -1,0 +1,9 @@
+streamlit
+PyMuPDF
+asyncio
+cachetools
+langchain
+langchain_openai
+langchain_pinecone
+pinecone
+openai
