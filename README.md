@@ -1,48 +1,60 @@
-# Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database# AI Information Chatbot
+# PDF Information Chatbot
+
+![Chatbot Demo](demo.gif)
 
 ## Overview
-This Streamlit-based chatbot application utilizes AI to provide personalized information from AI-related documents using vector embeddings and a question-answering system. It leverages PyMuPDF for PDF text extraction, Pinecone for vector storage and retrieval, and OpenAI's GPT-4 model for natural language processing.
-The application is specifically tailored to analyze documents like "AI Trends.pdf," which contains detailed information about upcoming trends in artificial intelligence.
+
+This repository contains an AI-powered PDF Information Chatbot developed using Python, Streamlit, PyMuPDF, OpenAI's GPT-3.5-turbo model, Pinecone for vector indexing, and other libraries. The chatbot allows users to upload PDF documents, extracts and indexes their content, and provides intelligent responses to user queries based on document content similarity.
 
 ## Features
-- **PDF Text Extraction:** Extracts text from PDF documents using PyMuPDF.
-- **Vector Embeddings:** Uses OpenAI's embeddings model for document representation.
-- **Question-Answering:** Implements a retrieval and question-answering chain to respond to user queries based on the context stored in the document vectors.
-- **Chat History Management:** Manages user interactions and maintains chat history across sessions.
+
+- **PDF Upload**: Users can upload multiple PDF documents.
+- **Document Processing**: Extracts text content from uploaded PDFs using PyMuPDF.
+- **Vector Embeddings**: Converts text content into high-dimensional vector representations using OpenAI's embeddings.
+- **Pinecone Indexing**: Indexes embeddings for fast retrieval and recommendation.
+- **Interactive Chat Interface**: Allows users to query information from uploaded PDFs via a Streamlit-based chat interface.
+- **Recommendation System**: Recommends relevant PDFs based on user queries and document content similarity.
+- **Learning and Adaptation**: System learns from user interactions to improve recommendations over time.
 
 ## Installation
-1. Clone the repository:
-git clone [[https://github.com/hetalgada15/Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database.git]
-cd Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/your_username/pdf-information-chatbot.git
+   cd pdf-information-chatbot
+   
+2. **Install dependencies:**
+
+pip install -r requirements.txt
+
+3. **Set up environment variables:**
+
+OPENAI_API_KEY: Your OpenAI API key for GPT-3.5-turbo model.
+PINECONE_API_KEY: Your Pinecone API key.
+PINECONE_ENV (optional): Pinecone environment (default is us-east-1)
+
+4.**Run the application:**
+streamlit run app.py
+
+5.**Open your browser and go to http://localhost:8501 to access the chatbot interface.**
+
+Usage
+Upload PDF files using the file uploader.
+Select a PDF file to query or search.
+Enter your question in the text input box and click "Send" to get a response from the chatbot.
+Use the "Clear" button to reset the chat history and messages.
+Contributing
+Contributions are welcome! Please feel free to open issues or pull requests for any improvements, features, or bug fixes.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgments
+PyMuPDF - For PDF document processing.
+OpenAI - For providing the GPT-3.5-turbo model.
+Pinecone - For vector indexing and fast retrieval.
+Streamlit - For building interactive web applications with Python.
 
 
-2. Install dependencies from `requirements.txt`:
-
-## Setup
-1. **Environment Variables:**
-- Ensure the following environment variables are set:
-  - `OPENAI_API_KEY`: API key for OpenAI's GPT-4 model.
-  - `PINECONE_API_KEY`: API key for Pinecone vector storage.
-  - Optionally, set `PINECONE_ENV` to specify the Pinecone region (default: `us-east-1`).
-
-2. **Run the Application:**
-streamlit run AI.py
-
-
-## Usage
-- Access the chatbot interface through your web browser (default URL: `http://localhost:8501`).
-- Enter your questions in the input box and click 'Send' to receive responses from the AI chatbot.
-
-## Additional Notes
-- **Export APIs:** The project includes functionalities to export APIs, providing an interface for integrating with other applications.
-- **Chat History:** The application retains chat history for each session, allowing users to view previous interactions.
-
-## Technologies Used
-- Python
-- Streamlit
-- PyMuPDF
-- Pinecone
-- OpenAI GPT-4
-
-## Author
-[Hetal Gada]
+## This Markdown document provides clear sections for overview, features, installation instructions, usage guidelines, contributing guidelines, license information, and acknowledgments. Adjust the URLs, paths, and descriptions as per your specific project details.
