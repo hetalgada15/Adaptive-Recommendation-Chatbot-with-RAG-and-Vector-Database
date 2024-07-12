@@ -37,7 +37,10 @@ PINECONE_ENV (optional): Pinecone environment (default is us-east-1)
 4. **Run the application:**
 streamlit run AI.py
 
-5. **Open your browser and go to http://localhost:8501 to access the chatbot interface.**
+5. **Github link:**
+   https://youtu.be/d81LLhEhOUY
+
+6. **Open your browser and go to http://localhost:8501 to access the chatbot interface.**
 
 Usage
 Upload PDF files using the file uploader.
