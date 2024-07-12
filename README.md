@@ -21,7 +21,7 @@ This repository contains an AI-powered PDF Information Chatbot developed using P
 1. **Clone the repository:**
 
    ```bash
-   git clone [https://github.com/your_username/pdf-information-chatbot.git](https://github.com/hetalgada15/Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database.git)
+   git clone https://github.com/hetalgada15/Adaptive-Recommendation-Chatbot-with-RAG-and-Vector-Database.git
    cd pdf-information-chatbot
    
 2. **Install dependencies:**
