@@ -34,10 +34,10 @@ OPENAI_API_KEY: Your OpenAI API key for GPT-3.5-turbo model.
 PINECONE_API_KEY: Your Pinecone API key.
 PINECONE_ENV (optional): Pinecone environment (default is us-east-1)
 
-4.**Run the application:**
-streamlit run app.py
+4. **Run the application:**
+streamlit run AI.py
 
-5.**Open your browser and go to http://localhost:8501 to access the chatbot interface.**
+5. **Open your browser and go to http://localhost:8501 to access the chatbot interface.**
 
 Usage
 Upload PDF files using the file uploader.
