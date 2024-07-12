@@ -1,6 +1,3 @@
-
-
-
 import os
 import fitz  # PyMuPDF
 import asyncio
@@ -44,7 +41,7 @@ if not pinecone_api_key:
 pinecone_env = os.getenv("PINECONE_ENV", "us-east-1")
 
 # Initialize Pinecone with API key
-pc = Pinecone(api_key=pinecone_api_key)
+pc = Pinecone(api_key="51f99f81-0585-416f-a7e2-77157132e310")
 
 # Create or connect to a Pinecone index
 index_name = "ai-index"
@@ -58,7 +55,7 @@ if index_name not in [index["name"] for index in pc.list_indexes()]:
 index = pc.Index(index_name)
 
 # Initialize OpenAI embeddings model with API key
-embeddings_model = OpenAIEmbeddings(openai_api_key=openai_api_key)
+embeddings_model = OpenAIEmbeddings(openai_api_key="sk-proj-HVmyShtDqvaj8iHgAupPT3BlbkFJ8qLFXrD28KLiGFNI5h0k")
 
 # Extract text from a PDF file using PyMuPDF
 def extract_text_from_pdf(pdf_path):
@@ -131,22 +128,26 @@ contextualize_q_prompt = ChatPromptTemplate.from_messages(
     ]
 )
 
-model_name = "gpt-4"
+model_name = "gpt-3.5-turbo"
 llm = ChatOpenAI(model_name=model_name)
 
 # Set up the retrieval chain
 def get_retrieval_chain(vector_store):
+    # Create a retriever that is aware of chat history
     retriever = create_history_aware_retriever(
         llm=llm, retriever=vector_store.as_retriever(), prompt=contextualize_q_prompt
     )
 
+    # Create a chain to process documents and answer questions
     question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)
 
+    # Combine the retriever and question-answer chains into a retrieval chain
     rag_chain = create_retrieval_chain(
         retriever=retriever,
         combine_docs_chain=question_answer_chain
     )
 
+    # Set chat active status in session state
     st.session_state.chat_active = True
 
     return rag_chain
@@ -154,59 +155,87 @@ def get_retrieval_chain(vector_store):
 store = {}
 
 def get_session_history(session_id: str) -> SimpleChatMessageHistory:
+    # Retrieve or create a chat message history based on session ID
     if session_id not in store:
         store[session_id] = SimpleChatMessageHistory()
     return store[session_id]
 
-
 def get_answer(query):
+    # Retrieve the retrieval chain using the cached vector store
     retrieval_chain = get_retrieval_chain(st.session_state.vector_store)
+    
+    # Log user query in session history
     st.session_state.history.append({"role": "user", "content": query})
     session_id = "session_id"
     history = get_session_history(session_id)
+    
+    # Invoke the retrieval chain to get an answer based on user input and chat history
     answer = retrieval_chain.invoke({"input": query, "chat_history": history.get_messages()})
     
+    # Determine the response based on the answer received
     if answer["answer"].startswith("The context provided does not contain specific information"):
-        response = "This question is irrelevant to the document. Sorry!"
+        response = "This question is irrelevant to the document provided."
     else:
         response = answer["answer"]
     
+    # Log assistant response in session history
     st.session_state.history.append({"role": "assistant", "content": response})
     
-    return {"answer": response.split("\n")[0]}
+    # Return the response, showing only the first line if it's not an irrelevant message
+    return {"answer": response if response.startswith("This question is irrelevant to the document provided.") else response.split("\n")[0]}
 
 # Streamlit app setup
-st.title("🔗 AI Information Chatbot")
+st.title("🔗 PDF Information Chatbot")
 
-if "vector_store" not in st.session_state:
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    split_docs = loop.run_until_complete(load_and_chunk_pdfs(["AI.pdf"], chunk_size=1000))
-    st.session_state.vector_store = get_cached_vector_store(split_docs)
+# File uploader to allow users to upload multiple PDFs
+uploaded_files = st.file_uploader("Upload PDFs", type="pdf", accept_multiple_files=True)
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+# Check if files are uploaded
+if uploaded_files:
+    pdf_paths = []
+    for uploaded_file in uploaded_files:
+        # Save uploaded files to a temporary directory
+        temp_file_path = os.path.join("/tmp", uploaded_file.name)
+        with open(temp_file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        pdf_paths.append(temp_file_path)
+    
+    # Dropdown to select a PDF file
+    selected_pdf = st.selectbox("Select a PDF to query", pdf_paths)
 
-if "history" not in st.session_state:
-    st.session_state.history = []
+    if "vector_store" not in st.session_state:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        split_docs = loop.run_until_complete(load_and_chunk_pdfs([selected_pdf], chunk_size=1000))
+        st.session_state.vector_store = get_cached_vector_store(split_docs)
 
-# Display chat messages from history
-for message in st.session_state.messages:
-    with st.expander(message["role"]):
-        st.write(message["content"])
+    # Initialize messages and history in session state if not already set
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
 
-# React to user input
-query = st.text_input("Ask your question here:")
-if st.button("Send"):
-    answer = get_answer(query)
-    with st.expander("Assistant"):
-        st.write(answer["answer"])
+    if "history" not in st.session_state:
+        st.session_state.history = []
 
-def clear_messages():
-    st.session_state.messages = []
-    st.session_state.history = []  # Clear the conversation history as well
-st.button("Clear", help="Click to clear the chat", on_click=clear_messages)
+    # Display chat messages from history
+    for message in st.session_state.messages:
+        with st.expander(message["role"]):
+            st.write(message["content"])
 
-# Footer
-st.sidebar.text("Powered by OpenAI and Pinecone")
+    # React to user input
+    query = st.text_input("Ask your question here:")
+    if st.button("Send"):
+        answer = get_answer(query)
+        with st.expander("Assistant"):
+            st.write(answer["answer"])
 
+    # Clear messages and history on button click
+    def clear_messages():
+        st.session_state.messages = []
+        st.session_state.history = []  # Clear the conversation history as well
+    st.button("Clear", help="Click to clear the chat", on_click=clear_messages)
+
+    # Sidebar footer
+    st.sidebar.text("Powered by OpenAI and Pinecone")
+
+else:
+    st.write("Please upload PDF files to get started.")
