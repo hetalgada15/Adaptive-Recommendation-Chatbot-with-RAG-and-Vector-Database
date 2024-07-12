@@ -1,4 +1,4 @@
-# PDF Information Chatbot
+# PDFs Recommendation Chatbot
 
 ![Chatbot Demo](demo.gif)
 
@@ -57,4 +57,4 @@ Pinecone - For vector indexing and fast retrieval.
 Streamlit - For building interactive web applications with Python.
 
 
-## This Markdown document provides clear sections for overview, features, installation instructions, usage guidelines, contributing guidelines, license information, and acknowledgments. Adjust the URLs, paths, and descriptions as per your specific project details.
+This Markdown document provides clear sections for overview, features, installation instructions, usage guidelines, contributing guidelines, license information, and acknowledgments. Adjust the URLs, paths, and descriptions as per your specific project details.
